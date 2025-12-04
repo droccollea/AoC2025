@@ -1,4 +1,4 @@
-package net.tintreach.aoc2025
+package aoc2025
 
 import java.io.File
 import java.io.InputStream
