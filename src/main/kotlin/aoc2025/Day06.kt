@@ -43,8 +43,51 @@ private fun part1(): Long {
     return total
 }
 
+private fun part2() : Long {
+    var total = 0L
+
+    var subTotal = 0L
+    var operation = '+'
+    val sb = kotlin.text.StringBuilder("")
+
+    for (index in 0..<lineList[0].length) {
+        // Read down each column and build numbers until a row of spaces is found.
+        // Apply the operation.
+        for (row in 0..<lineList.size) {
+            if (lineList[row][index] in "+*") {
+                operation = lineList[row][index]
+            }
+            else if (lineList[row][index] != ' ') {
+                sb.append(lineList[row][index])
+            }
+        }
+
+        // A column read. Apply the math else reset for next.
+        if (Regex("[0-9]+").matches(sb.toString())) {
+            val number = sb.toString().toLong()
+            if (subTotal == 0L) {
+                subTotal = number
+            }
+            else {
+                when (operation) {
+                    '+' -> subTotal += number
+                    '*' -> subTotal *= number
+                }
+            }
+        }
+        // End of a sum or last column. Update total and reset for the next.
+        if (sb.toString() == "" || index == lineList[0].length-1) {
+//            println("Adding $subTotal to $total")
+            total += subTotal
+            subTotal = 0L
+        }
+        sb.clear()
+    }
+    return total
+}
+
 fun main(args: Array<String>) {
     readInput(args[0])
-    println(part1()) //4878670269096
-//    println(part2()) //
+//    println(part1()) //4878670269096
+    println(part2()) //8674740488592
 }
