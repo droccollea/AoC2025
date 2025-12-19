@@ -12,9 +12,9 @@ private fun readInput(path: String) {
     inputStream.bufferedReader().forEachLine { lineList.add(it) }
 }
 
-var circuits = mutableSetOf<MutableSet<String>>()
-var closestPairs = mutableListOf<Pair<String, Double>>()
-var count = 0
+private var circuits = mutableSetOf<MutableSet<String>>()
+private var closestPairs = mutableListOf<Pair<String, Double>>()
+private var count = 0
 
 private fun part1(loops: Int): Long {
 
@@ -24,7 +24,7 @@ private fun part1(loops: Int): Long {
     // Build the list of pairs with distance.
     for (i in 0..<lineList.size) {
         for (j in i + 1..<lineList.size) {
-            val distance = compareDistances(lineList[i], lineList[j])
+            val distance = calculateDistances(lineList[i], lineList[j])
             closestPairs.add(Pair(lineList[i] + "|" + lineList[j], distance))
         }
     }
@@ -77,7 +77,7 @@ private fun part2(): Long {
     return xA * xB
 }
 
-private fun compareDistances(a: String, b: String): Double {
+private fun calculateDistances(a: String, b: String): Double {
     val (aX, aY, aZ) = a.split(',').map { t -> t.toInt() }
     val (bX, bY, bZ) = b.split(',').map { t -> t.toInt() }
 
